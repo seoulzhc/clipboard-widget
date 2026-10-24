@@ -21,6 +21,8 @@
         <sys:String x:Key="MsgEmptyFavorite">点左侧 ☆ 收藏常用内容</sys:String>
         <sys:String x:Key="MsgEditTitle">编辑内容</sys:String>
         <sys:String x:Key="MsgEditTip">编辑这一条</sys:String>
+        <sys:String x:Key="MsgDeleteTip">删除这一条</sys:String>
+        <sys:String x:Key="MsgDeleted">已删除</sys:String>
         <sys:String x:Key="MsgSave">保存</sys:String>
         <sys:String x:Key="MsgCancel">取消</sys:String>
         <sys:String x:Key="MsgEditHint">Ctrl+Enter 保存 · Esc 取消</sys:String>

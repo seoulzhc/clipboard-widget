@@ -14,6 +14,7 @@ A tiny, dependency-free clipboard history panel for Windows. It sits on your des
 - **Automatic history** — watches the clipboard and keeps the latest 60 copied texts.
 - **Two columns** — *History* on the left, *Favorites* on the right.
 - **Star to favorite** — click ☆ on a row and it appears in Favorites; click ★ to remove it.
+- **Delete entries** — click ✕ on a row to remove it from the list.
 - **Click to copy, double-click to edit** — or use the ✎ button on a row. `Ctrl+Enter` saves, `Esc` cancels.
 - **Resize from any corner** — drag a corner to scale the whole card (0.6×–1.6×). Size and position are remembered.
 - **Pin / move** — 📌 toggles always-on-top; drag the title bar to move the card.
@@ -51,6 +52,7 @@ powershell -Sta -NoProfile -ExecutionPolicy Bypass -File .\clipboard-widget.ps1
 | Copy an item again | Single click |
 | Edit an item | Double-click the row, or click ✎ |
 | Favorite / unfavorite | ☆ / ★ on the row |
+| Delete an entry | ✕ on the row |
 | Resize | Drag any of the four corners |
 | Move | Drag the title bar |
 | Always on top | 📌 |

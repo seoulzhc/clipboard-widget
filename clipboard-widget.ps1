@@ -251,6 +251,25 @@ function Toggle-Favorite {
     Render-All
 }
 
+function Remove-Entry {
+    param([string]$Kind, [string]$Text)
+    $removed = $false
+    if ($Kind -eq 'history') {
+        for ($i = 0; $i -lt $script:History.Count; $i++) {
+            if ($script:History[$i].Text -eq $Text) { $script:History.RemoveAt($i); $removed = $true; break }
+        }
+    } else {
+        for ($i = 0; $i -lt $script:Favorites.Count; $i++) {
+            if ($script:Favorites[$i].Text -eq $Text) { $script:Favorites.RemoveAt($i); $removed = $true; break }
+        }
+    }
+    if ($removed) {
+        Save-Data
+        Render-All
+        Set-Footer (Get-Msg 'MsgDeleted')
+    }
+}
+
 function Add-History {
     param([string]$Text)
     if ([string]::IsNullOrWhiteSpace($Text)) { return }
@@ -481,9 +500,12 @@ function New-TextRow {
     $colEdit.Width = [System.Windows.GridLength]::Auto
     $colStar = New-Object System.Windows.Controls.ColumnDefinition
     $colStar.Width = [System.Windows.GridLength]::Auto
+    $colDel = New-Object System.Windows.Controls.ColumnDefinition
+    $colDel.Width = [System.Windows.GridLength]::Auto
     [void]$grid.ColumnDefinitions.Add($colText)
     [void]$grid.ColumnDefinitions.Add($colEdit)
     [void]$grid.ColumnDefinitions.Add($colStar)
+    [void]$grid.ColumnDefinitions.Add($colDel)
 
     $label = New-Object System.Windows.Controls.TextBlock
     $label.Text = ($Text -replace '\s+', ' ')
@@ -502,6 +524,8 @@ function New-TextRow {
     $star.Tag = $tag
     $star.ToolTip = if ($IsFavorite) { Get-Msg 'MsgUnfavorite' } else { Get-Msg 'MsgFavorite' }
     $star.Margin = New-Object System.Windows.Thickness(2, 0, 0, 0)
+    $star.Width = 22
+    $star.Height = 22
     $star.VerticalAlignment = [System.Windows.VerticalAlignment]::Top
     [System.Windows.Controls.Grid]::SetColumn($star, 2)
 
@@ -509,8 +533,8 @@ function New-TextRow {
     $edit.Style = $script:Win.FindResource('StarBtn')
     $edit.Content = [string][char]0x270E
     $edit.FontSize = 12
-    $edit.Width = 22
-    $edit.Height = 22
+    $edit.Width = 20
+    $edit.Height = 20
     $edit.Foreground = Get-Brush '#94A3B8'
     $edit.Tag = $tag
     $edit.ToolTip = Get-Msg 'MsgEditTip'
@@ -518,14 +542,29 @@ function New-TextRow {
     $edit.VerticalAlignment = [System.Windows.VerticalAlignment]::Top
     [System.Windows.Controls.Grid]::SetColumn($edit, 1)
 
+    $del = New-Object System.Windows.Controls.Button
+    $del.Style = $script:Win.FindResource('StarBtn')
+    $del.Content = [string][char]0x2715
+    $del.FontSize = 11
+    $del.Width = 20
+    $del.Height = 20
+    $del.Foreground = Get-Brush '#C3CEDC'
+    $del.Tag = $tag
+    $del.ToolTip = Get-Msg 'MsgDeleteTip'
+    $del.Margin = New-Object System.Windows.Thickness(1, 0, 0, 0)
+    $del.VerticalAlignment = [System.Windows.VerticalAlignment]::Top
+    [System.Windows.Controls.Grid]::SetColumn($del, 3)
+
     [void]$grid.Children.Add($label)
     [void]$grid.Children.Add($edit)
     [void]$grid.Children.Add($star)
+    [void]$grid.Children.Add($del)
     $row.Content = $grid
 
     $row.Add_Click({ param($s, $ev) Copy-Text ([string]$s.Tag.Text) })
     $star.Add_Click({ param($s, $ev) $ev.Handled = $true; Toggle-Favorite ([string]$s.Tag.Text) })
     $edit.Add_Click({ param($s, $ev) $ev.Handled = $true; Show-Editor ([string]$s.Tag.Text) ([string]$s.Tag.Kind) })
+    $del.Add_Click({ param($s, $ev) $ev.Handled = $true; Remove-Entry ([string]$s.Tag.Kind) ([string]$s.Tag.Text) })
     $row.Add_PreviewMouseLeftButtonDown({
         param($s, $ev)
         if ($ev.ClickCount -ne 2) { return }
