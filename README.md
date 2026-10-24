@@ -1,5 +1,10 @@
 # Clipboard Widget · 剪贴板助手
 
+[![Latest release](https://img.shields.io/github/v/release/seoulzhc/clipboard-widget?sort=semver&display_name=tag)](https://github.com/seoulzhc/clipboard-widget/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**[⬇ Download the latest release](https://github.com/seoulzhc/clipboard-widget/releases/latest)**
+
 A tiny, dependency-free clipboard history panel for Windows. It sits on your desktop as a borderless always-on-top card, records the text you copy, and lets you star the snippets you use most.
 
 ![Clipboard Widget](docs/panel.png)

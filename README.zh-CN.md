@@ -1,5 +1,10 @@
 # 剪贴板助手 · Clipboard Widget
 
+[![最新版本](https://img.shields.io/github/v/release/seoulzhc/clipboard-widget?sort=semver&display_name=tag)](https://github.com/seoulzhc/clipboard-widget/releases/latest)
+[![许可证](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**[⬇ 下载最新版本](https://github.com/seoulzhc/clipboard-widget/releases/latest)**
+
 一个零依赖的 Windows 剪贴板历史小工具：一块无边框、可置顶的卡片常驻桌面，自动记录你复制的文字，常用的可以点星收藏。
 
 ![剪贴板助手](docs/panel.png)
